@@ -1,0 +1,6 @@
+{
+  "name": "Hospital Patient Experience Intelligence System",
+  "description": "Multi-agent hospital decision support system coordinating six healthcare AI agents to analyze patient experience, triage complaints, and synthesize executive insights.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

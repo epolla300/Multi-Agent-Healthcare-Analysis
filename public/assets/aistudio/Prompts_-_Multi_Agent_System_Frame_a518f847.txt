@@ -1,0 +1,58 @@
+Build a React web app called "Hospital Patient Experience Intelligence System".
+
+GOAL
+Show how six healthcare AI agents work together, like a hospital team, to help managers make decisions. Users should see each agent's result before it is passed to the next agent.
+
+AGENTS
+Use the attached agent prompt file. Each agent is a separate AI call with its own prompt and returns JSON.
+- Agent 4 Orchestrator: plans the work, then makes the final decision
+- Agent 1 Feedback: theme and sentiment of comments
+- Agent 2 Monitoring: patterns and equity concerns
+- Agent 3 Triage: severity, routing, and human review
+- Agent 6 Communication: communication problems and a better patient message
+- Agent 5 Analytics: combines all findings into executive insights
+
+WORKFLOW
+1. Agent 4 plans: reads the manager's question and picks which specialists to use.
+2. Agents 1, 2, 3, 6 run at the same time (skip any the plan does not need).
+3. Agent 5 combines the specialist results.
+4. Agent 4 makes the final decision.
+
+RUN MODES
+- Auto Run: runs all four steps without stopping.
+- Step-by-Step Review: stops after each step and shows the results BEFORE they are sent on.
+  After step 1, the user can turn specialists on or off and edit their tasks.
+  After steps 2 and 3, the user can re-run one agent if a result looks wrong.
+  A "Approve & Continue" button sends the results to the next agent.
+Never repeat an AI call that already finished. If an agent fails, show the error and a Retry button for that agent only.
+
+INTERACTIVE AGENT DIAGRAM AND VISUALIZATION
+Draw the six agents as boxes: Agent 4 on top, Agents 1, 2, 3, 6 in the middle, Agent 5 at the bottom, with arrows showing how results flow (including Agent 5 back to Agent 4).
+- Show each agent's status: Pending, Running, Waiting for Review, Completed, Skipped, or Failed.
+- Highlight the running agent and light up an arrow when results actually move along it.
+- Number the boxes in the order they run.
+- Clicking an agent shows its task, the data it received, and its result as an easy-to-read card (with a "Show JSON" option).
+
+DATA
+- Upload the CSV file. Show the records in a table; all are selected by default.
+- Text box for the manager's question. Default: "What should management fix first to improve patient experience, and which cases need human review?"
+- The Comment column has only a few distinct comments repeated across many records. Send each distinct comment to an agent once, with how many records it appears in, and link the results back to every record in code.
+- Send each agent only the columns it needs (listed in its prompt).
+- Calculate all numbers with JavaScript, not with AI: number of records, average Patient_Satisfaction and Communication_Rating, follow-up rate (Followup_Compliance = 1), portal use rate (Portal_Usage = 1), average satisfaction by Service_Line and by Year, and counts by Readmission_Risk and AI_Risk_Flag.
+
+DASHBOARD
+- Top: the main management alert from Agent 4.
+- KPI cards: satisfaction, communication rating, follow-up rate, human-review cases.
+- Charts: satisfaction by service line, main comment themes (Agent 1), severity levels (Agent 3).
+- Table of cases that need human review.
+- Bottom: Agent 4's three management recommendations.
+- Label each panel with the agent that produced it.
+
+DESIGN
+Clean, professional healthcare look: white cards on a light gray background, teal as the main color, one accent color and icon per agent, clear status colors, smooth animations, and a layout that also works on a phone.
+
+AI MODEL
+Put all AI calls in one server-side function, callLLM(prompt, data), so the AI provider can be changed later in one place. Use Gemini as the default with a fast model. Keep API keys on the server.
+
+SAFETY
+The data is synthetic. Agents must not invent medical facts or diagnoses. Ambiguous or high-risk cases go to human review. Never fake agent results or statuses.
